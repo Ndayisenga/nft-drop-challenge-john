@@ -9,6 +9,7 @@ interface Props {
   collections: Collection[]
 }
 const Home = ({ collections }: Props) => {
+  console.log('collections', collections)
 
   return (
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col py-20 px-10 2xl:px-0">
@@ -26,7 +27,7 @@ const Home = ({ collections }: Props) => {
 
       <main className="bg-slate-100 p-10 shadow-xl shadow-rose-400/20">
         <div className="grid space-x-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-          {collections.map(collection => {
+          {collections.map(collection => (
 
             <Link href={`/nft/${collection.slug.current}`}>
               <div className="flex cursor-pointer flex-col items-center transition-all duration-200 hover:scale-105">
@@ -46,7 +47,7 @@ const Home = ({ collections }: Props) => {
                 </div>
               </div>
             </Link>
-          })}
+          ))}
         </div>  
       </main>
     </div>
@@ -56,8 +57,7 @@ const Home = ({ collections }: Props) => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const query = `
-  *[_type == "collection"] {
+  const query = `*[_type == "collection"] {
     _id,
     title,
     address,
@@ -86,8 +86,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      collections
-    }
+      collections,
+    },
   }
 }
 
